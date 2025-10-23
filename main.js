@@ -15,3 +15,5 @@ renderHeader();
 renderRegistrationForm({ appEl });
 renderAuthForm({ appEl });
 renderPosts();
+
+console.log('kursovik');
