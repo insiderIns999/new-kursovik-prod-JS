@@ -23,12 +23,12 @@ export const renderRegistrationForm = ({ appEl }) => {
 
         appEl.innerHTML = registrationFormHTML;
 
-        const name = document.getElementById('name-input').value;
-        const login = document.getElementById('login-input').value;
-        const password = document.getElementById('password-input').value;
-
         const regButtonElement = document.getElementById('registration-button');
         regButtonElement.addEventListener('click', () => {
+            const name = document.getElementById('name-input').value;
+            const login = document.getElementById('login-input').value;
+            const password = document.getElementById('password-input').value;
+
             registerUser({ login, password, name });
         });
     });
