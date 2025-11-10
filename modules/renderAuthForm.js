@@ -1,4 +1,7 @@
 import { loginUser } from './api.js';
+import { authHeaderRender } from './authHeader.js';
+import { quitFromApp } from './quit.js';
+import { addPost } from './addPost.js';
 
 export const renderAuthForm = ({ appEl }) => {
     const authLink = document.querySelector('.auth-link');
@@ -23,13 +26,18 @@ export const renderAuthForm = ({ appEl }) => {
 
         appEl.innerHTML = authFormHTML;
 
-        const login = document.getElementById('login-input').value;
-        const password = document.getElementById('password-input').value;
-
         const authButtonElement = document.getElementById('authorization-button');
 
         authButtonElement.addEventListener('click', () => {
-            loginUser({ login, password });
+            const login = document.getElementById('login-input').value;
+            const password = document.getElementById('password-input').value;
+            
+            loginUser({ login, password })
+            .then(() => {
+                authHeaderRender();
+                addPost();
+                quitFromApp();
+            })
         });
     });
 }
