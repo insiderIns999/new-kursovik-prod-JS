@@ -1,7 +1,19 @@
-export const addPostToList = () => {
-    const addPostToListButton = document.getElementById('add-button');
+import { token, onAddPostClick } from "./api.js";
 
-    addPostToListButton.addEventListener('click', () => {
-        
-    });
-}
+export const addPostToList = ({ description, uploadImageURL }) => {
+  const addPostToListButton = document.getElementById("add-button");
+
+  addPostToListButton.addEventListener("click", () => {
+    if (token == null) {
+      throw new Error("Пользователь не авторизован");
+    } else {
+      onAddPostClick({ description, uploadImageURL })
+        .then(() => {
+          authHeaderRender();
+        })
+        .then(() => {
+          renderPosts();
+        });
+    }
+  });
+};

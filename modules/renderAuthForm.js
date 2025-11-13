@@ -1,14 +1,14 @@
-import { loginUser } from './api.js';
-import { authHeaderRender } from './authHeader.js';
-import { quitFromApp } from './quit.js';
-import { addPost } from './addPost.js';
+import { loginUser, updateToken } from "./api.js";
+import { authHeaderRender } from "./authHeader.js";
+import { quitFromApp } from "./quit.js";
+import { addPost } from "./addPost.js";
 
 export const renderAuthForm = ({ appEl }) => {
-    const authLink = document.querySelector('.auth-link');
+  const authLink = document.querySelector(".auth-link");
 
-    authLink.addEventListener('click', () => {
-        const appEl = document.getElementById('app');
-        const authFormHTML = `
+  authLink.addEventListener("click", () => {
+    const appEl = document.getElementById("app");
+    const authFormHTML = `
             <div class="page-container">
                 <div class="header-container"></div>
                 <div class="form">
@@ -24,20 +24,20 @@ export const renderAuthForm = ({ appEl }) => {
             </div>    
         `;
 
-        appEl.innerHTML = authFormHTML;
+    appEl.innerHTML = authFormHTML;
 
-        const authButtonElement = document.getElementById('authorization-button');
+    const authButtonElement = document.getElementById("authorization-button");
 
-        authButtonElement.addEventListener('click', () => {
-            const login = document.getElementById('login-input').value;
-            const password = document.getElementById('password-input').value;
-            
-            loginUser({ login, password })
-            .then(() => {
-                authHeaderRender();
-                addPost();
-                quitFromApp();
-            })
-        });
+    authButtonElement.addEventListener("click", () => {
+      const login = document.getElementById("login-input").value;
+      const password = document.getElementById("password-input").value;
+
+      loginUser({ login, password }).then((response) => {
+        updateToken(response.user.token);
+        authHeaderRender();
+        addPost();
+        quitFromApp();
+      });
     });
-}
+  });
+};
